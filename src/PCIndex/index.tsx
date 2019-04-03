@@ -1,6 +1,6 @@
 import React from 'react';
-import PCHeader from '../PCHeader';
-import PCFooter from '../PCFooter';
+import PCHeader from '../components/PCHeader';
+import PCFooter from '../components/PCFooter';
 
 class PCIndex extends React.Component{
     render(): React.ReactNode {

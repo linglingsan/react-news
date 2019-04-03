@@ -1,6 +1,6 @@
 import React from 'react';
-import MobileHeader from "../MobileHeader";
-import MobileFooter from "../MobileFooter";
+import MobileHeader from "../components/MobileHeader";
+import MobileFooter from "../components/MobileFooter";
 
 class MobileIndex extends React.Component{
     render(): React.ReactNode {
