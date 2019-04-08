@@ -1,19 +1,28 @@
 import React from 'react';
-import {Col, Icon, Menu, Modal, Row} from 'antd';
+import {Col, Icon, Menu, message, Modal, Row} from 'antd';
 import './index.css';
 import Register from '../Register';
 
 interface HearderParams {
     current: string,
-    registerVisible: boolean
+    registerVisible: boolean,
+    userNickName: string,
+    userid: number
+}
+interface rParams {
+    r_userName: string,
+    r_password: string,
+    r_confirmPassword: string
 }
 
 class PCHeader extends React.Component {
     state: HearderParams = {
         current: 'top',
-        registerVisible: false
+        registerVisible: false,
+        userNickName: '',
+        userid: 0
     }
-    formRef:object = new Object();
+    form: any = {}
     /***
      * 显示弹框
      * @param key  键
@@ -34,9 +43,29 @@ class PCHeader extends React.Component {
             this.setState({current: e.key})
         }
     }
-
+    /***
+     * 确认弹框
+     */
     reigisterConfirm = () => {
+        const params: rParams = this.form.handleSubmit();
+        if (!params) return;
+        const myFetchOptions: object = {
+            method: 'GET'
+        };
+        const {r_userName, r_password, r_confirmPassword} = params;
+        fetch(`http://newsapi.gugujiankong.com/Handler.ashx?action=register&r_userName=${r_userName}&r_password=${r_password}&r_confirmPassword=${r_confirmPassword}`, myFetchOptions)
+            .then(response => response.json()).then(json => {
+            this.setState({userNickName: json.NickUserName, userid: json.UserId});
+            this.setModalVisible({'registerVisible': false});
+            message.success("请求成功！");
+        });
 
+    }
+    /***
+     * 取消弹框
+     */
+    cancelHandle = () => {
+        this.setModalVisible({'registerVisible': false});
     }
 
     render(): React.ReactNode {
@@ -91,9 +120,11 @@ class PCHeader extends React.Component {
                     title="登录/注册"
                     visible={registerVisible}
                     onOk={this.reigisterConfirm}
-                    onCancel={() => this.setModalVisible({'registerVisible': false})}
+                    onCancel={() => this.cancelHandle}
                 >
-                    <Register wrappedComponentRef={(formRef: object) => {this.formRef = formRef}}/>
+                    <Register wrappedComponentRef={(form: object) => {
+                        this.form = form
+                    }}/>
                 </Modal>
             </header>
         );

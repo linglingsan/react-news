@@ -7,31 +7,33 @@ interface RegisterProps extends FormComponentProps {
 }
 
 class Register extends React.Component<RegisterProps, any> {
-
-    handleSubmit = (e: any) => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                console.log('Received values of form: ', values);
-            }
+    /***
+     * 获取表单参数
+     */
+    handleSubmit = () => {
+        let params;
+        this.props.form.validateFields((err: boolean) => {
+            if (err) return;
+            params = this.props.form.getFieldsValue();
         });
+        return params;
     }
 
     render(): React.ReactNode {
-        const { getFieldDecorator } = this.props.form;
+        const {getFieldDecorator} = this.props.form;
         const formItemLayout = {
             labelCol: {
-                sm: { span: 4 }
+                sm: {span: 4}
             },
             wrapperCol: {
-                sm: { span: 20 }
+                sm: {span: 20}
             },
         };
         return (
             <Form {...formItemLayout} onSubmit={this.handleSubmit}>
                 <Form.Item label="账户">
                     {getFieldDecorator('r_userName', {
-                        rules: [{ required: true, message: '请输入账号!' }],
+                        rules: [{required: true, message: '请输入账号!'}],
                     })(
                         <Input placeholder="请输入您的账号"/>
                     )}
@@ -39,14 +41,14 @@ class Register extends React.Component<RegisterProps, any> {
                 </Form.Item>
                 <Form.Item label="密码">
                     {getFieldDecorator('r_password', {
-                        rules: [{ required: true, message: '请输入您的密码!' }],
+                        rules: [{required: true, message: '请输入您的密码!'}],
                     })(
                         <Input type="password" placeholder="请输入您的密码"/>
                     )}
                 </Form.Item>
                 <Form.Item label="确认密码">
                     {getFieldDecorator('r_confirmPassword', {
-                        rules: [{ required: true, message: '请再次输入您的密码!' }],
+                        rules: [{required: true, message: '请再次输入您的密码!'}],
                     })(
                         <Input type="password" placeholder="请再次输入您的密码"/>
                     )}
@@ -55,5 +57,6 @@ class Register extends React.Component<RegisterProps, any> {
         )
     }
 }
+
 const RegisterForm = Form.create()(Register);
 export default RegisterForm;
