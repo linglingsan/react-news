@@ -56,6 +56,7 @@ class PCHeader extends React.Component {
         fetch(`http://newsapi.gugujiankong.com/Handler.ashx?action=register&r_userName=${r_userName}&r_password=${r_password}&r_confirmPassword=${r_confirmPassword}`, myFetchOptions)
             .then(response => response.json()).then(json => {
             this.setState({userNickName: json.NickUserName, userid: json.UserId});
+            this.form.resetValue();
             this.setModalVisible({'registerVisible': false});
             message.success("请求成功！");
         });
@@ -65,6 +66,7 @@ class PCHeader extends React.Component {
      * 取消弹框
      */
     cancelHandle = () => {
+        this.form.resetValue();
         this.setModalVisible({'registerVisible': false});
     }
 
@@ -119,8 +121,10 @@ class PCHeader extends React.Component {
                 <Modal
                     title="登录/注册"
                     visible={registerVisible}
+                    okText="注册"
+                    cancelText="取消"
                     onOk={this.reigisterConfirm}
-                    onCancel={() => this.cancelHandle}
+                    onCancel={this.cancelHandle}
                 >
                     <Register wrappedComponentRef={(form: object) => {
                         this.form = form

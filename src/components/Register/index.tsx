@@ -18,6 +18,12 @@ class Register extends React.Component<RegisterProps, any> {
         });
         return params;
     }
+    /***
+     * 重置表单值
+     */
+    resetValue =() => {
+        this.props.form.resetFields();
+    }
 
     render(): React.ReactNode {
         const {getFieldDecorator} = this.props.form;
