@@ -1,12 +1,19 @@
 import React from 'react';
 import {Card} from 'antd';
-import './index.css'
+
 
 interface blockParams {
     news: []
 }
 
-class PCNewsBlock extends React.Component {
+interface Props  {
+    type: string,
+    count: number,
+    width: string,
+    bordered: boolean
+}
+
+class PCNewsBlock extends React.Component<Props, {}> {
     state: blockParams = {
         news: []
     };
@@ -19,7 +26,7 @@ class PCNewsBlock extends React.Component {
         const myFetchOptions = {
             method: 'GET'
         };
-        // @ts-ignore
+
         const {type, count} = this.props;
         fetch(`http://newsapi.gugujiankong.com/Handler.ashx?action=getnews&type=${type}&count=${count}`, myFetchOptions).then(response => response.json()).then(json => this.setState({news: json}));
 
@@ -28,8 +35,8 @@ class PCNewsBlock extends React.Component {
     render(): React.ReactNode {
         const {news} = this.state;
         const newsList = news.length
-            ? news.map((newsItem, index) => (
-                <li key={index}></li>
+            ? news.map((newsItem:any, index) => (
+                <li key={index}>{newsItem.title}</li>
             ))
             : '没有加载到任何新闻';
         return (

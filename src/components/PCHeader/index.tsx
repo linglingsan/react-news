@@ -1,6 +1,5 @@
 import React from 'react';
 import {Col, Icon, Menu, message, Modal, Row} from 'antd';
-import './index.css';
 import Register from '../Register';
 
 interface HearderParams {
