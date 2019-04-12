@@ -1,5 +1,4 @@
 import React from 'react';
-import './index.css';
 import {Icon, message, Modal} from 'antd';
 import Register from '../Register';
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import {Col, Row} from "antd";
-import './index.css';
 
 class MobileFooter extends React.Component{
     render(): React.ReactNode {
