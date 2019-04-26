@@ -10,7 +10,7 @@ interface Props {
     count: number,
     imageWidth: string,
     cartTitle: string,
-    width: number
+    width: string
 }
 
 class PCNewsImageBlock extends React.Component<Props, {}> {
